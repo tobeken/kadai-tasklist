@@ -1,4 +1,8 @@
+<% if logged_in? %>
+  <%= render 'tasks/index' %>
+<% else %>
 
     <h1>Welcome to tasklist</h1>
     <%= link_to 'Sign up now!', signup_path %>
 
+<% end %>
