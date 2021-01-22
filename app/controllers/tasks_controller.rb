@@ -3,10 +3,10 @@ before_action :require_user_logged_in
 before_action :correct_user, only:[:show, :edit, :update,  :destroy]
 
   def index
-      if logged_in?
+      
       @task = current_user.tasks.build  
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
-      end
+      
   end
 
   def show
@@ -18,23 +18,24 @@ before_action :correct_user, only:[:show, :edit, :update,  :destroy]
   end
 
   def create
-   @task = current_user.tasks.build(task_params)
+      @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = 'タスクを投稿しました。'
       redirect_to root_url
     else
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'タスクの投稿に失敗しました。'
+      render :new
     
     end
   end
 
   def edit
-       @task = Task.find(params[:id])
+      @task = Task.find(params[:id])
   end
 
   def update
-       @task = Task.find(params[:id])
+      @task = Task.find(params[:id])
 
     if @task.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
